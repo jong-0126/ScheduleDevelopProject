@@ -17,8 +17,16 @@ public class Schedule extends BaseEntity{
 
     private String contents;
 
-    @ManyToOne
-    @JoinColumn(name = "userName")
-    private Member member;
+    public Schedule() {
+    }
 
+    public Schedule(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+    public void update(String title, String contents){
+        this.title = title;
+        this.contents = contents;
+    }
 }
