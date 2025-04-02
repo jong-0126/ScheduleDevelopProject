@@ -15,7 +15,6 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    @Transactional
     public ScheduleResponseDto create(String title, String contents) {
 
         Schedule schedule = new Schedule(title, contents);
@@ -55,6 +54,7 @@ public class ScheduleService {
         findSchedule.update(title, contents);
     }
 
+    @Transactional
     public void delete(Long id) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
         scheduleRepository.delete(findSchedule);

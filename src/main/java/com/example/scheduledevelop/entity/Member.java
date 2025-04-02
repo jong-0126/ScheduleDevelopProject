@@ -15,5 +15,17 @@ public class Member extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String userName;
 
+    @Column(nullable = false)
+    private String password;
+
     private String eamil;
+
+    public Member() {
+    }
+
+    public Member(String userName, String password, String eamil) {
+        this.userName = userName;
+        this.password = password;
+        this.eamil = eamil;
+    }
 }
