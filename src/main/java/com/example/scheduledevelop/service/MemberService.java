@@ -6,6 +6,8 @@ import com.example.scheduledevelop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -18,5 +20,13 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
 
         return new MemberResponseDto(savedMember.getId(), savedMember.getUserName(), savedMember.getEamil());
+    }
+
+    public List<MemberResponseDto> findAll() {
+
+        return memberRepository.findAll()
+                .stream()
+                .map(MemberResponseDto::toDto)
+                .toList();
     }
 }
