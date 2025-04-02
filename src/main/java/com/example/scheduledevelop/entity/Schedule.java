@@ -17,6 +17,10 @@ public class Schedule extends BaseEntity{
 
     private String contents;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     public Schedule() {
     }
 
