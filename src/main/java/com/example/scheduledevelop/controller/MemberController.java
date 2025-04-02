@@ -1,7 +1,8 @@
 package com.example.scheduledevelop.controller;
 
-import com.example.scheduledevelop.dto.MemberRequestDto;
-import com.example.scheduledevelop.dto.MemberResponseDto;
+import com.example.scheduledevelop.dto.member.MemberRequestDto;
+import com.example.scheduledevelop.dto.member.MemberResponseDto;
+import com.example.scheduledevelop.dto.member.PasswordRequestDto;
 import com.example.scheduledevelop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,23 @@ public class MemberController {
 
         MemberResponseDto memberResponseDto = memberService.findById(id);
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+
+    //회원 정보 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody MemberRequestDto requestDto){
+
+        memberService.update(id, requestDto.getUserName(), requestDto.getPassword(),requestDto.getEmail());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //회원 비밀번호 변경
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody PasswordRequestDto requestDto){
+
+        memberService.updatePassword(id, requestDto.getOldPassword(), requestDto.getNewPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

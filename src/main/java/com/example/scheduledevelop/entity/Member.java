@@ -18,14 +18,23 @@ public class Member extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
-    private String eamil;
+    private String email;
 
     public Member() {
     }
 
-    public Member(String userName, String password, String eamil) {
+    public Member(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
-        this.eamil = eamil;
+        this.email = email;
+    }
+
+    public void update(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
+    }
+
+    public void updatePassword(String password){
+        this.password = password;
     }
 }

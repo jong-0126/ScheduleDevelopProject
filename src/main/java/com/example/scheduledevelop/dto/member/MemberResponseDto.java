@@ -1,4 +1,4 @@
-package com.example.scheduledevelop.dto;
+package com.example.scheduledevelop.dto.member;
 
 import com.example.scheduledevelop.entity.Member;
 import lombok.Getter;
@@ -19,6 +19,6 @@ public class MemberResponseDto {
     }
 
     public static MemberResponseDto toDto(Member member){
-        return new MemberResponseDto(member.getId(), member.getUserName(), member.getEamil());
+        return new MemberResponseDto(member.getId(), member.getUserName(), member.getEmail());
     }
 }
