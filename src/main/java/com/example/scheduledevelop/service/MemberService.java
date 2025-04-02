@@ -68,4 +68,9 @@ public class MemberService {
 
         findMember.updatePassword(newPassword);
     }
+
+    public void delete(Long id) {
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        memberRepository.delete(findMember);
+    }
 }
