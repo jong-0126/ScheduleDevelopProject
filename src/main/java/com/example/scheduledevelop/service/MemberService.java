@@ -29,4 +29,9 @@ public class MemberService {
                 .map(MemberResponseDto::toDto)
                 .toList();
     }
+
+    public MemberResponseDto findById(Long id) {
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        return new MemberResponseDto(findMember.getId(), findMember.getUserName(), findMember.getEamil());
+    }
 }

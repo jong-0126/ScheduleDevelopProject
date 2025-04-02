@@ -34,4 +34,12 @@ public class MemberController {
 
         return new ResponseEntity<>(memberResponseDtoList, HttpStatus.OK);
     }
+
+    //회원 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
+
+        MemberResponseDto memberResponseDto = memberService.findById(id);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
 }
