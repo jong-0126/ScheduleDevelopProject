@@ -2,7 +2,6 @@ package com.example.scheduledevelop.controller;
 
 import com.example.scheduledevelop.dto.member.MemberRequestDto;
 import com.example.scheduledevelop.entity.Member;
-import com.example.scheduledevelop.exception.LoginFailedException;
 import com.example.scheduledevelop.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,18 +24,11 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody MemberRequestDto dto, HttpServletRequest request){
 
-        if (dto.getEmail() == null || dto.getEmail().isEmpty()) {
-            throw new LoginFailedException("아이디 입력은 필수입니다");
-        }
-
-        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
-            throw new LoginFailedException("비밀번호 입력은 필수입니다");
-        }
-
         Member member = memberService.login(dto.getEmail(), dto.getPassword());
 
         HttpSession session = request.getSession(true);
         session.setAttribute("sessionKey", member.getId());
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

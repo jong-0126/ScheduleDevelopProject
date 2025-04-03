@@ -23,9 +23,7 @@ public class MemberController {
 
     //회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<MemberResponseDto> signUp(
-            @Validated @RequestBody MemberRequestDto requestDto
-    ){
+    public ResponseEntity<MemberResponseDto> signUp(@Validated @RequestBody MemberRequestDto requestDto){
         MemberResponseDto memberResponseDto = memberService.save(requestDto.getUserName(), requestDto.getPassword(), requestDto.getEmail());
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
