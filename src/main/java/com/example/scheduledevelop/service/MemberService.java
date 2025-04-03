@@ -73,4 +73,10 @@ public class MemberService {
         Member findMember = memberRepository.findByIdOrElseThrow(id);
         memberRepository.delete(findMember);
     }
+
+    public Member login(String email, String password) {
+
+        return memberRepository.findByEmailAndPasswordOrElseThrow(email, password);
+
+    }
 }
