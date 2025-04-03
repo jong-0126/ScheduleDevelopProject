@@ -6,6 +6,7 @@ import com.example.scheduledevelop.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     //일정 생성
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> create(@RequestBody ScheduleRequestDto requestDto){
+    public ResponseEntity<ScheduleResponseDto> create(@Validated @RequestBody ScheduleRequestDto requestDto){
 
         ScheduleResponseDto scheduleResponseDto = scheduleService.create(requestDto.getTitle(), requestDto.getContents());
 

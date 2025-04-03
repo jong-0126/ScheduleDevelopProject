@@ -5,8 +5,10 @@ import com.example.scheduledevelop.dto.member.MemberResponseDto;
 import com.example.scheduledevelop.dto.member.PasswordRequestDto;
 import com.example.scheduledevelop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,14 +16,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
 
     //회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<MemberResponseDto> signUp(@RequestBody MemberRequestDto requestDto){
-
+    public ResponseEntity<MemberResponseDto> signUp(
+            @Validated @RequestBody MemberRequestDto requestDto
+    ){
         MemberResponseDto memberResponseDto = memberService.save(requestDto.getUserName(), requestDto.getPassword(), requestDto.getEmail());
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
