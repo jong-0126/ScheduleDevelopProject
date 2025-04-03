@@ -3,10 +3,7 @@ package com.example.scheduledevelop.controller;
 import com.example.scheduledevelop.dto.member.MemberRequestDto;
 import com.example.scheduledevelop.dto.member.MemberResponseDto;
 import com.example.scheduledevelop.dto.member.PasswordRequestDto;
-import com.example.scheduledevelop.entity.Member;
 import com.example.scheduledevelop.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,34 +25,6 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.save(requestDto.getUserName(), requestDto.getPassword(), requestDto.getEmail());
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody MemberRequestDto dto, HttpServletRequest request){
-
-        Member member = memberService.login(dto.getEmail(), dto.getPassword());
-
-        if(member != null){
-            if(member.getEmail() == null || member.getEmail().isEmpty() || member.getPassword() == null || member.getPassword().isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            HttpSession session = request.getSession(true);
-            session.setAttribute("sessionKey", member.getId());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request){
-
-        HttpSession session = request.getSession(false);
-        if(session != null){
-            session.invalidate();
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //회원 전체 조회

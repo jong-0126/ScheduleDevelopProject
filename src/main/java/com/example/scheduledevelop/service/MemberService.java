@@ -17,6 +17,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    // 회원 가입
     public MemberResponseDto save(String userName, String password, String email) {
 
         Member member = new Member(userName, password, email);
@@ -25,6 +26,7 @@ public class MemberService {
         return new MemberResponseDto(savedMember.getId(), savedMember.getUserName(), savedMember.getEmail());
     }
 
+    // 회원 전체 조회
     public List<MemberResponseDto> findAll() {
 
         return memberRepository.findAll()
@@ -33,11 +35,13 @@ public class MemberService {
                 .toList();
     }
 
+    // 회원 단건 조회
     public MemberResponseDto findById(Long id) {
         Member findMember = memberRepository.findByIdOrElseThrow(id);
         return new MemberResponseDto(findMember.getId(), findMember.getUserName(), findMember.getEmail());
     }
 
+    // 회원 정보 수정
     @Transactional
     public void update(Long id, String userName, String password, String email) {
 
@@ -57,6 +61,7 @@ public class MemberService {
 
     }
 
+    //회원 비밀번호 변경
     @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
 
@@ -69,11 +74,13 @@ public class MemberService {
         findMember.updatePassword(newPassword);
     }
 
+    // 회원 삭제
     public void delete(Long id) {
         Member findMember = memberRepository.findByIdOrElseThrow(id);
         memberRepository.delete(findMember);
     }
 
+    // 회원 로그인
     public Member login(String email, String password) {
 
         return memberRepository.findByEmailAndPasswordOrElseThrow(email, password);
