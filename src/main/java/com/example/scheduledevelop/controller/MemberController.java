@@ -47,6 +47,16 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request){
+
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //회원 전체 조회
     @GetMapping
