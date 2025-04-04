@@ -18,17 +18,29 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final MemberRepository memberRepository;
 
+    /**
+     * 일정 등록 서비스 로직
+     * @param title 제목
+     * @param contents 내용
+     * @param memberId 유저_id
+     * @return
+     */
     public ScheduleResponseDto create(String title, String contents, Long memberId) {
 
+        // id로 member 찾기
         Member findMember = memberRepository.findByIdOrElseThrow(memberId);
 
+        // 일정 객체 새로 만들어서 save 메소드로 저장
         Schedule schedule = new Schedule(title, contents, findMember);
-
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents());
     }
 
+    /**
+     * 등록된 일정 전체 조회 서비스 로직
+     * @return
+     */
     public List<ScheduleResponseDto> findAll() {
 
         return scheduleRepository.findAll()
@@ -37,6 +49,11 @@ public class ScheduleService {
                 .toList();
     }
 
+    /**
+     * 일정 선택 조회 서비스 로직
+     * @param id schedule_id
+     * @return
+     */
     public ScheduleResponseDto findById(Long id) {
 
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
@@ -44,6 +61,12 @@ public class ScheduleService {
         return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
     }
 
+    /**
+     * 일정 수정 서비스 로직
+     * @param id schedule_id
+     * @param title 수정할 제목
+     * @param contents 수정할 내용
+     */
     @Transactional
     public void update(Long id, String title, String contents) {
 
@@ -59,6 +82,10 @@ public class ScheduleService {
         findSchedule.update(title, contents);
     }
 
+    /**
+     * 일정 삭제 서비스 로직
+     * @param id schedule_id
+     */
     @Transactional
     public void delete(Long id) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);

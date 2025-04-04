@@ -21,7 +21,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    //회원 가입
+    /**
+     * 회원가입 API
+     * @param requestDto 요청된 회원 정보(이름, email, password)
+     * @return
+     */
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signUp(@Validated @RequestBody MemberRequestDto requestDto){
         MemberResponseDto memberResponseDto = memberService.save(requestDto.getUserName(), requestDto.getPassword(), requestDto.getEmail());
@@ -29,7 +33,10 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
 
-    //회원 전체 조회
+    /**
+     * 전체 회원 조회 API
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<MemberResponseDto>> findAll(){
 
@@ -38,7 +45,11 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDtoList, HttpStatus.OK);
     }
 
-    //회원 단건 조회
+    /**
+     * 선택 회원 조회 API
+     * @param id 선택할 회원 id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
 
@@ -46,7 +57,12 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 
-    //회원 정보 수정
+    /**
+     * 회원 정보 수정 API
+     * @param id 선택할 회원 id
+     * @param requestDto 수정할 회원 정보
+     * @return
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody MemberRequestDto requestDto){
 
@@ -55,7 +71,12 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //회원 비밀번호 변경
+    /**
+     * 회원 비밀번호 변경 API
+     * @param id 선택할 회원 id
+     * @param requestDto 변경할 패스워드
+     * @return
+     */
     @PatchMapping("/{id}/password")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody PasswordRequestDto requestDto){
 
@@ -64,7 +85,11 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //회원 정보 삭제
+    /**
+     * 회원 삭제 API
+     * @param id 선택할 회원 id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         memberService.delete(id);

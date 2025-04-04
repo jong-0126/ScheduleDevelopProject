@@ -18,6 +18,13 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final ScheduleRepository scheduleRepository;
 
+    /**
+     * 댓글 저장 서비스 로직
+     * @param scheduleId 일정 식별자
+     * @param memberId 유저 식별자
+     * @param comment 저장될 댓글 내용
+     * @return
+     */
     public CommentResponseDto save(Long scheduleId, Long memberId, String comment) {
 
         Member findMember = memberRepository.findByIdOrElseThrow(memberId);
