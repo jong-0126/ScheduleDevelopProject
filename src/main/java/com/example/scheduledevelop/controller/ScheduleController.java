@@ -3,6 +3,7 @@ package com.example.scheduledevelop.controller;
 import com.example.scheduledevelop.dto.schedule.ScheduleRequestDto;
 import com.example.scheduledevelop.dto.schedule.ScheduleResponseDto;
 import com.example.scheduledevelop.service.ScheduleService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,11 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     //일정 생성
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> create(@Validated @RequestBody ScheduleRequestDto requestDto){
+    public ResponseEntity<ScheduleResponseDto> create(@Validated @RequestBody ScheduleRequestDto requestDto, HttpSession session){
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.create(requestDto.getTitle(), requestDto.getContents());
+        Long memberId = (Long) session.getAttribute("sessionKey");
+
+        ScheduleResponseDto scheduleResponseDto = scheduleService.create(requestDto.getTitle(), requestDto.getContents(), memberId);
 
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
     }

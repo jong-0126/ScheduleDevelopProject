@@ -22,11 +22,13 @@ public class Schedule extends BaseEntity{
     private Member member;
 
     public Schedule() {
+
     }
 
-    public Schedule(String title, String contents) {
+    public Schedule(String title, String contents, Member member) {
         this.title = title;
         this.contents = contents;
+        this.member = member;
     }
 
     public void update(String title, String contents){

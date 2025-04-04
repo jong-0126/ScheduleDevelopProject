@@ -1,7 +1,9 @@
 package com.example.scheduledevelop.service;
 
 import com.example.scheduledevelop.dto.schedule.ScheduleResponseDto;
+import com.example.scheduledevelop.entity.Member;
 import com.example.scheduledevelop.entity.Schedule;
+import com.example.scheduledevelop.repository.MemberRepository;
 import com.example.scheduledevelop.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,13 @@ import java.util.List;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final MemberRepository memberRepository;
 
-    public ScheduleResponseDto create(String title, String contents) {
+    public ScheduleResponseDto create(String title, String contents, Long memberId) {
 
-        Schedule schedule = new Schedule(title, contents);
+        Member findMember = memberRepository.findByIdOrElseThrow(memberId);
+
+        Schedule schedule = new Schedule(title, contents, findMember);
 
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
