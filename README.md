@@ -8,12 +8,6 @@ Spring Boot를 이용하여 개발한 일정관리 프로젝트를 JPA를 활용
 
 ## 💻 개발 환경
 
-개발 환경에서 DB를 JPA로 다뤘다는 걸 README나 이력서 등에 명확하고 간결하게 표현하고 싶다면 아래와 같은 방식이 좋아요:
-
----
-
-### ✅ 개발 환경
-
 - **Backend**: Java 17, Spring Boot
 - **ORM**: JPA (Hibernate)
 - **Database**: MySQL
