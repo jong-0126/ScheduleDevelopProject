@@ -9,6 +9,10 @@ import com.example.scheduledevelop.repository.MemberRepository;
 import com.example.scheduledevelop.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,16 +29,63 @@ public class CommentService {
      * @param comment 저장될 댓글 내용
      * @return
      */
+    @Transactional
     public CommentResponseDto save(Long scheduleId, Long memberId, String comment) {
 
         Member findMember = memberRepository.findByIdOrElseThrow(memberId);
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
 
-        Comment savedComment = new Comment(comment, findMember, findSchedule);
+        Comment comment1 = new Comment(comment, findMember, findSchedule);
 
-        commentRepository.save(savedComment);
+        Comment savedComment = commentRepository.save(comment1);
 
-        return null;
+        return new CommentResponseDto(
+                savedComment.getId(),
+                savedComment.getComment(),
+                savedComment.getMember().getId(),
+                savedComment.getSchedule().getId()
+        );
     }
 
+    public List<CommentResponseDto> findBySchedule(Long scheduleId) {
+        List<Comment> comments = commentRepository.findByScheduleId(scheduleId);
+        return comments.stream()
+                .map(comment -> new CommentResponseDto(
+                        comment.getId(),
+                        comment.getComment(),
+                        comment.getMember().getId(),
+                        comment.getSchedule().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public CommentResponseDto findById(Long id) {
+        Comment findComment = commentRepository.findByIdOrElseThrow(id);
+
+        return new CommentResponseDto(
+                findComment.getId(),
+                findComment.getComment(),
+                findComment.getMember().getId(),
+                findComment.getSchedule().getId()
+        );
+    }
+
+    @Transactional
+    public CommentResponseDto update(Long id, String comment) {
+
+        Comment findComment = commentRepository.findByIdOrElseThrow(id);
+        findComment.update(comment);
+
+        return new CommentResponseDto(
+                findComment.getId(),
+                findComment.getComment(),
+                findComment.getMember().getId(),
+                findComment.getSchedule().getId()
+        );
+    }
+
+    public void delete(Long id) {
+
+        Comment findComment = commentRepository.findByIdOrElseThrow(id);
+        commentRepository.delete(findComment);
+    }
 }

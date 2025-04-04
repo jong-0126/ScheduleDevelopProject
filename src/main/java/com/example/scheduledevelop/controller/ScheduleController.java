@@ -28,7 +28,7 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> create(@Validated @RequestBody ScheduleRequestDto requestDto, HttpSession session){
 
-        Long memberId = (Long) session.getAttribute("sessionKey");
+        Long memberId = (Long) session.getAttribute("LOGIN_USER");
 
         ScheduleResponseDto scheduleResponseDto = scheduleService.create(requestDto.getTitle(), requestDto.getContents(), memberId);
 

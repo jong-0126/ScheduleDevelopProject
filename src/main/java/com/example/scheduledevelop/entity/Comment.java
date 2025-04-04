@@ -15,11 +15,11 @@ public class Comment extends BaseEntity{
     @Column(nullable = false)
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
@@ -30,5 +30,9 @@ public class Comment extends BaseEntity{
         this.comment = comment;
         this.member = member;
         this.schedule = schedule;
+    }
+
+    public void update(String comment){
+        this.comment = comment;
     }
 }

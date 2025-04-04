@@ -30,7 +30,7 @@ public class LoginFilter implements Filter {
 
             HttpSession session = httpRequest.getSession(false);
 
-            if(session == null || session.getAttribute("sessionKey") == null){
+            if(session == null || session.getAttribute("LOGIN_USER") == null){
                 throw new RuntimeException("로그인 해주세요");
             }
 

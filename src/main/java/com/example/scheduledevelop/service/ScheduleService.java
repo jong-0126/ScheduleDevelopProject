@@ -34,7 +34,12 @@ public class ScheduleService {
         Schedule schedule = new Schedule(title, contents, findMember);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
-        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents());
+        return new ScheduleResponseDto(
+                savedSchedule.getId(),
+                savedSchedule.getTitle(),
+                savedSchedule.getContents(),
+                savedSchedule.getMember().getId()
+        );
     }
 
     /**
@@ -45,7 +50,12 @@ public class ScheduleService {
 
         return scheduleRepository.findAll()
                 .stream()
-                .map(ScheduleResponseDto::toDto)
+                .map(schedule -> new ScheduleResponseDto(
+                        schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContents(),
+                        schedule.getMember().getId()
+                ))
                 .toList();
     }
 
@@ -58,7 +68,12 @@ public class ScheduleService {
 
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
 
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
+        return new ScheduleResponseDto(
+                findSchedule.getId(),
+                findSchedule.getTitle(),
+                findSchedule.getContents(),
+                findSchedule.getMember().getId()
+        );
     }
 
     /**

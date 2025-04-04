@@ -32,7 +32,7 @@ public class LoginController {
         Member member = loginService.login(dto.getEmail(), dto.getPassword());
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("sessionKey", member.getId());
+        session.setAttribute("LOGIN_USER", member.getId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
