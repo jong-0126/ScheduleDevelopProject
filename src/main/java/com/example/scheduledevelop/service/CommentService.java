@@ -8,8 +8,10 @@ import com.example.scheduledevelop.repository.CommentRepository;
 import com.example.scheduledevelop.repository.MemberRepository;
 import com.example.scheduledevelop.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,9 +85,14 @@ public class CommentService {
         );
     }
 
-    public void delete(Long id) {
+    public void delete(Long id, Long memberId) {
 
-        Comment findComment = commentRepository.findByIdOrElseThrow(id);
-        commentRepository.delete(findComment);
+        Comment comment = commentRepository.findByIdOrElseThrow(id);
+
+        if(!comment.getMember().getId().equals(memberId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "자신이 작성한 댓글만 삭제할 수 있습니다.");
+        }
+
+        commentRepository.delete(comment);
     }
 }

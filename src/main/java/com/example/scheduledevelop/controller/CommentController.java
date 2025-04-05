@@ -80,10 +80,19 @@ public class CommentController {
 
     }
 
+    /**
+     * 댓글 삭제 API
+     * @param id 게시물 id
+     * @param memberId 유저 id
+     * @return
+     */
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id,
+            @SessionAttribute(name = "LOGIN_USER") Long memberId
+    ){
 
-        commentService.delete(id);
+        commentService.delete(id, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
 
